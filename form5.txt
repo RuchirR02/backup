@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key); // Fixed the super constructor
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp( // Wrapped the MaterialApp around the form
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Form Example'),
+        ),
+        body: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.person),
+                  hintText: "Enter your Name",
+                  labelText: "Name",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter some text";
+                  }
+                  return null;
+                },
+              ),
+              
+              
+              TextFormField(
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.person),
+                  hintText: "Enter your age",
+                  labelText: "Age",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter some text";
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.calendar_today),
+                  hintText: "Enter Date",
+                  labelText: "date",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter some text";
+                  }
+                  return null;
+                },
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Processing Data")),
+                    );
+                  }
+                },
+                child: const Text("Submit"),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
